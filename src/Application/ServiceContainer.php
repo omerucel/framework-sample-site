@@ -2,6 +2,10 @@
 
 namespace Application;
 
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+
 class ServiceContainer
 {
     /**
@@ -54,6 +58,44 @@ class ServiceContainer
         if (!isset($this->services[__METHOD__])) {
             $loader = new \Twig_Loader_Filesystem($this->configs['twig']['template_path']);
             $this->services[__METHOD__] = new \Twig_Environment($loader, $this->configs['twig']['options']);
+        }
+
+        return $this->services[__METHOD__];
+    }
+
+    /**
+     * @return Session
+     */
+    public function getSession()
+    {
+        if (!isset($this->services[__METHOD__])) {
+            $pdoHandler = new PdoSessionHandler($this->getPdo(), $this->configs['session']);
+            $storage = new NativeSessionStorage(array(), $pdoHandler);
+            $storage->setOptions($this->configs['session']);
+
+            $session = new Session($storage);
+            $session->start();
+
+            $this->services[__METHOD__] = $session;
+        }
+
+        return $this->services[__METHOD__];
+    }
+
+    /**
+     * @return \PDO
+     */
+    public function getPDO()
+    {
+        if (!isset($this->services[__METHOD__])) {
+            $pdo = new \PDO(
+                $this->configs['pdo']['dsn'],
+                $this->configs['pdo']['username'],
+                $this->configs['pdo']['password']
+            );
+            $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
+            $this->services[__METHOD__] = $pdo;
         }
 
         return $this->services[__METHOD__];
