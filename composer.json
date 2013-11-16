@@ -1,0 +1,17 @@
+{
+    "name": "omerucel/framework-sample-site",
+    "require": {
+        "omerucel/framework": "dev-master"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/omerucel/framework"
+        }
+    ],
+    "autoload": {
+        "psr-0" : {
+            "Module" : "src/"
+        }
+    }
+}

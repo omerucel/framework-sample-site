@@ -1,0 +1,61 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "938b36b4bacf67b87370fcadbaee7982",
+    "packages": [
+        {
+            "name": "omerucel/framework",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/omerucel/framework.git",
+                "reference": "5f3d1e9d8fbe07816e949975156f792e4846c96c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/omerucel/framework/zipball/5f3d1e9d8fbe07816e949975156f792e4846c96c",
+                "reference": "5f3d1e9d8fbe07816e949975156f792e4846c96c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "OU": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Ömer ÜCEL",
+                    "email": "omerucel@gmail.com"
+                }
+            ],
+            "homepage": "https://github.com/omerucel/framework",
+            "support": {
+                "source": "https://github.com/omerucel/framework/tree/master",
+                "issues": "https://github.com/omerucel/framework/issues"
+            },
+            "time": "2013-11-16 17:17:19"
+        }
+    ],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "omerucel/framework": 20
+    },
+    "platform": [
+
+    ],
+    "platform-dev": [
+
+    ]
+}
