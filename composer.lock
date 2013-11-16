@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "938b36b4bacf67b87370fcadbaee7982",
+    "hash": "0c71ad4324cf734c1824c89dcdb8159f",
     "packages": [
         {
             "name": "omerucel/framework",
@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/omerucel/framework.git",
-                "reference": "5f3d1e9d8fbe07816e949975156f792e4846c96c"
+                "reference": "d80fac66ddd3b43633dc0e5967daf1d084b3b42d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/omerucel/framework/zipball/5f3d1e9d8fbe07816e949975156f792e4846c96c",
-                "reference": "5f3d1e9d8fbe07816e949975156f792e4846c96c",
+                "url": "https://api.github.com/repos/omerucel/framework/zipball/d80fac66ddd3b43633dc0e5967daf1d084b3b42d",
+                "reference": "d80fac66ddd3b43633dc0e5967daf1d084b3b42d",
                 "shasum": ""
             },
             "require": {
@@ -39,7 +39,106 @@
                 "source": "https://github.com/omerucel/framework/tree/master",
                 "issues": "https://github.com/omerucel/framework/issues"
             },
-            "time": "2013-11-16 17:17:19"
+            "time": "2013-11-16 20:11:02"
+        },
+        {
+            "name": "symfony/http-foundation",
+            "version": "v2.3.4",
+            "target-dir": "Symfony/Component/HttpFoundation",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/HttpFoundation.git",
+                "reference": "fdf130fe65457aedbc4639a22f4ef9d3be5c002c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/fdf130fe65457aedbc4639a22f4ef9d3be5c002c",
+                "reference": "fdf130fe65457aedbc4639a22f4ef9d3be5c002c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\HttpFoundation\\": ""
+                },
+                "classmap": [
+                    "Symfony/Component/HttpFoundation/Resources/stubs"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony HttpFoundation Component",
+            "homepage": "http://symfony.com",
+            "time": "2013-08-26 05:49:51"
+        },
+        {
+            "name": "twig/twig",
+            "version": "v1.14.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fabpot/Twig.git",
+                "reference": "ca445842fcea4f844d68203ffa2d00f5e3cdea64"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/ca445842fcea4f844d68203ffa2d00f5e3cdea64",
+                "reference": "ca445842fcea4f844d68203ffa2d00f5e3cdea64",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.14-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Twig_": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Armin Ronacher",
+                    "email": "armin.ronacher@active-4.com"
+                }
+            ],
+            "description": "Twig, the flexible, fast, and secure template language for PHP",
+            "homepage": "http://twig.sensiolabs.org",
+            "keywords": [
+                "templating"
+            ],
+            "time": "2013-10-30 08:20:53"
         }
     ],
     "packages-dev": [

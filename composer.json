@@ -1,7 +1,9 @@
 {
     "name": "omerucel/framework-sample-site",
     "require": {
-        "omerucel/framework": "dev-master"
+        "omerucel/framework": "dev-master",
+        "symfony/http-foundation": "2.3.4",
+        "twig/twig": "1.14.2"
     },
     "repositories": [
         {
@@ -11,7 +13,7 @@
     ],
     "autoload": {
         "psr-0" : {
-            "Module" : "src/"
+            "Application" : "src/"
         }
     }
 }

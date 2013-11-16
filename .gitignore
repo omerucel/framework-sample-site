@@ -2,3 +2,4 @@
 .DS_STORE
 vagrant/.vagrant
 vendor
+composer.lock

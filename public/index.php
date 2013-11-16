@@ -6,13 +6,13 @@ if (!isset($_SERVER['APP_ENV'])) {
 }
 
 // Loader
-$loader = include_once 'vendor/autoload.php';
+$loader = include_once '../vendor/autoload.php';
 
 // Configs
-$config = include_once 'app/configs/' . $_SERVER['APP_ENV'] . '.php';
+$config = include_once '../app/configs/' . $_SERVER['APP_ENV'] . '.php';
 
 // Routes
-$routes = include_once 'app/configs/routes.php';
+$routes = include_once '../app/configs/routes.php';
 
 $router = new \OU\Router($routes);
 
