@@ -8,10 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 class Site extends BaseModule
 {
     /**
-     * @return Response
+     * @return mixed|void
      */
     public function internalServerError()
     {
-        return new RedirectResponse('/500');
+        $response = new RedirectResponse('/500');
+        $response->send();
     }
 }

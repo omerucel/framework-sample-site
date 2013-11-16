@@ -8,14 +8,15 @@ abstract class BaseModule extends \OU\ModuleAbstract
 {
 
     /**
-     * @return Response
+     * @return mixed
      */
     abstract public function internalServerError();
 
     /**
-     * @param string $controllerClass
+     * @param $controllerClass
      * @param string $requestMethod
      * @param array $params
+     * @return mixed|void
      */
     public function dispatch($controllerClass, $requestMethod = 'get', array $params = array())
     {

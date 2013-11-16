@@ -8,10 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 class Admin extends BaseModule
 {
     /**
-     * @return Response
+     * @return mixed|void
      */
     public function internalServerError()
     {
-        return new RedirectResponse('/admin/500');
+        $response = new RedirectResponse('/admin/500');
+        $response->send();
     }
 }
