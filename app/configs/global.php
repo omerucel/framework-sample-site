@@ -9,7 +9,8 @@ define('BASE_PATH', realpath(__DIR__ . '/../../'));
 $configs = array(
     'pdo' => array(),
     'session' => array(),
-    'twig' => array()
+    'twig' => array(),
+    'monolog' => array()
 );
 
 date_default_timezone_set('Europe/Istanbul');
@@ -35,6 +36,28 @@ $configs['session']['db_id_col'] = 'session_id';
 $configs['session']['db_data_col'] = 'session_value';
 $configs['session']['db_time_col'] = 'session_time';
 //$configs['session']['cookie_lifetime'] = 3600;
+
+/**
+ * Monolog
+ * https://github.com/Seldaek/monolog
+ *
+ * levels:
+ *
+ * 100 DEBUG
+ * 200 INFO
+ * 250 NOTICE
+ * 300 WARNING
+ * 400 ERROR
+ * 500 CRITICAL
+ * 550 ALERT
+ * 600 EMERGENCY
+ *
+ */
+$configs['monolog']['name'] = 'logger';
+$configs['monolog']['file'] = APP_PATH . '/log/project.log';
+$configs['monolog']['level'] = 100;
+$configs['monolog']['line_format'] = "[%datetime%] [" . uniqid('REQ-') . "] %channel%.%level_name%: %message%\n";
+$configs['monolog']['datetime_format'] = 'Y-m-d H:i:s';
 
 /**
  * Twig

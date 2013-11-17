@@ -3,7 +3,8 @@
     "require": {
         "omerucel/framework": "dev-master",
         "symfony/http-foundation": "2.3.4",
-        "twig/twig": "1.14.2"
+        "twig/twig": "1.14.2",
+        "monolog/monolog": "1.7.0"
     },
     "repositories": [
         {

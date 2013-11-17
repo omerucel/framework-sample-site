@@ -100,4 +100,30 @@ class ServiceContainer
 
         return $this->services[__METHOD__];
     }
+
+    /**
+     * @return \Monolog\Logger
+     */
+    public function getMonolog()
+    {
+        if (!isset($this->services[__METHOD__])) {
+            $formatter = new \Monolog\Formatter\LineFormatter(
+                $this->configs['monolog']['line_format'],
+                $this->configs['monolog']['datetime_format']
+            );
+
+            $stream = new \Monolog\Handler\StreamHandler(
+                $this->configs['monolog']['file'],
+                $this->configs['monolog']['level']
+            );
+            $stream->setFormatter($formatter);
+
+            $monolog = new \Monolog\Logger($this->configs['monolog']['name']);
+            $monolog->pushHandler($stream);
+
+            $this->services[__METHOD__] = $monolog;
+        }
+
+        return $this->services[__METHOD__];
+    }
 }

@@ -13,6 +13,23 @@ abstract class BaseModule extends \OU\ModuleAbstract
     abstract public function internalServerError();
 
     /**
+     * @var ServiceContainer
+     */
+    protected $serviceContainer;
+
+    /**
+     * @return ServiceContainer
+     */
+    public function getServiceContainer()
+    {
+        if ($this->serviceContainer == null) {
+            $this->serviceContainer = new ServiceContainer($this->getApplication()->getConfigs());
+        }
+
+        return $this->serviceContainer;
+    }
+
+    /**
      * @param $controllerClass
      * @param string $requestMethod
      * @param array $params
@@ -26,12 +43,16 @@ abstract class BaseModule extends \OU\ModuleAbstract
          * @var BaseController $controller
          */
         $controller = new $controllerClass($this);
-        $controller->setServiceContainer(new ServiceContainer($this->getApplication()->getConfigs()));
+        $controller->setServiceContainer($this->getServiceContainer());
 
         /**
          * @var Response $response
          */
         $response = call_user_func_array(array($controller, $requestMethod), $params);
+        if ($response == null) {
+            $response = $this->getServiceContainer()->getResponse();
+        }
+
         $response->send();
     }
 
@@ -63,7 +84,10 @@ abstract class BaseModule extends \OU\ModuleAbstract
      */
     public function exceptionHandler(\Exception $exception)
     {
-        error_log($exception->getMessage() . ' ' . $exception->getTraceAsString());
+        $message = $exception->getMessage() . ' ' . $exception->getTraceAsString();
+        $message = str_replace("\n", '', $message);
+
+        $this->getServiceContainer()->getMonolog()->error($message);
         $this->internalServerError();
     }
 }
