@@ -2,6 +2,12 @@
 
 namespace Application;
 
+use Captcha\Captcha;
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
@@ -27,24 +33,24 @@ class ServiceContainer
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function getResponse()
     {
         if (!isset($this->services[__METHOD__])) {
-            $this->services[__METHOD__] = new \Symfony\Component\HttpFoundation\Response();
+            $this->services[__METHOD__] = new Response();
         }
 
         return $this->services[__METHOD__];
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Request
+     * @return Request
      */
     public function getRequest()
     {
         if (!isset($this->services[__METHOD__])) {
-            $this->services[__METHOD__] = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
+            $this->services[__METHOD__] = Request::createFromGlobals();
         }
 
         return $this->services[__METHOD__];
@@ -107,21 +113,72 @@ class ServiceContainer
     public function getMonolog()
     {
         if (!isset($this->services[__METHOD__])) {
-            $formatter = new \Monolog\Formatter\LineFormatter(
+            $formatter = new LineFormatter(
                 $this->configs['monolog']['line_format'],
                 $this->configs['monolog']['datetime_format']
             );
 
-            $stream = new \Monolog\Handler\StreamHandler(
+            $stream = new StreamHandler(
                 $this->configs['monolog']['file'],
                 $this->configs['monolog']['level']
             );
             $stream->setFormatter($formatter);
 
-            $monolog = new \Monolog\Logger($this->configs['monolog']['name']);
+            $monolog = new Logger($this->configs['monolog']['name']);
             $monolog->pushHandler($stream);
 
             $this->services[__METHOD__] = $monolog;
+        }
+
+        return $this->services[__METHOD__];
+    }
+
+    /**
+     * @return \Swift_Mailer
+     */
+    public function getSwiftMailer()
+    {
+        if (!isset($this->services[__METHOD__])) {
+            $transport = \Swift_SmtpTransport::newInstance();
+            $transport->setUsername($this->configs['swiftmailer']['username']);
+            $transport->setPassword($this->configs['swiftmailer']['password']);
+            $transport->setHost($this->configs['swiftmailer']['host']);
+            $transport->setPort($this->configs['swiftmailer']['port']);
+
+            $this->services[__METHOD__] = \Swift_Mailer::newInstance($transport);
+        }
+
+        return $this->services[__METHOD__];
+    }
+
+    /**
+     * @return \Facebook
+     */
+    public function getFacebook()
+    {
+        if (!isset($this->services[__METHOD__])) {
+            $this->services[__METHOD__] = new \Facebook(
+                array(
+                    'appId' => $this->configs['facebook']['app_id'],
+                    'secret' => $this->configs['facebook']['app_secret']
+                )
+            );
+        }
+
+        return $this->services[__METHOD__];
+    }
+
+    /**
+     * @return Captcha
+     */
+    public function getCaptcha()
+    {
+        if (!isset($this->services[__METHOD__])) {
+            $captcha = new Captcha();
+            $captcha->setPublicKey($this->configs['recaptcha']['public_key']);
+            $captcha->setPrivateKey($this->configs['recaptcha']['private_key']);
+
+            $this->services[__METHOD__] = $captcha;
         }
 
         return $this->services[__METHOD__];

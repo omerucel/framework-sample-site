@@ -3,4 +3,5 @@
 vagrant/.vagrant
 vendor
 log/*.log
+tmp/twig
 composer.lock

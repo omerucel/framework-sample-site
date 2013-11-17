@@ -10,7 +10,10 @@ $configs = array(
     'pdo' => array(),
     'session' => array(),
     'twig' => array(),
-    'monolog' => array()
+    'monolog' => array(),
+    'recaptcha' => array(),
+    'swiftmailer' => array(),
+    'facebook' => array()
 );
 
 date_default_timezone_set('Europe/Istanbul');
@@ -63,6 +66,31 @@ $configs['monolog']['datetime_format'] = 'Y-m-d H:i:s';
  * Twig
  */
 $configs['twig']['template_path'] = APP_PATH . '/templates';
-$configs['twig']['options'] = array();
+$configs['twig']['options'] = array(
+    'auto_reload' => true,
+    'cache' => APP_PATH . '/tmp/twig'
+);
+
+/**
+ * recaptcha
+ */
+$configs['recaptcha']['public_key'] = '';
+$configs['recaptcha']['private_key'] = '';
+
+/**
+ * smtp
+ */
+$configs['swiftmailer']['host'] = 'mail.server.com';
+$configs['swiftmailer']['port'] = 25;
+$configs['swiftmailer']['username'] = 'no-reply@server.com';
+$configs['swiftmailer']['password'] = '';
+$configs['swiftmailer']['from'] = 'no-reply@server.com';
+$configs['swiftmailer']['from_name'] = 'No-Reply';
+
+/**
+ * Facebook
+ */
+$configs['facebook']['app_id'] = '';
+$configs['facebook']['app_secret'] = '';
 
 return $configs;
