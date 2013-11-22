@@ -1,8 +1,9 @@
+*.bak
 .idea
 .DS_STORE
 vagrant/.vagrant
 vendor
-log/*.log
-tmp/twig
+app/log/*.log
+app/tmp/twig
 composer.lock
 app/configs/development.php
