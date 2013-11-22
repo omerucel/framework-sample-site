@@ -48,9 +48,19 @@ abstract class BaseModule extends \OU\ModuleAbstract
         /**
          * @var Response $response
          */
-        $response = call_user_func_array(array($controller, $requestMethod), $params);
-        if ($response == null) {
-            $response = $this->getServiceContainer()->getResponse();
+
+        $response = $controller->preDispatch();
+        if (!$response instanceof Response) {
+            $response = call_user_func_array(array($controller, $requestMethod), $params);
+
+            $postDispatchResponse = $controller->postDispatch();
+            if ($postDispatchResponse instanceof Response) {
+                $response = $postDispatchResponse;
+            }
+
+            if (!$response instanceof Response) {
+                $response = $this->getServiceContainer()->getResponse();
+            }
         }
 
         $response->send();

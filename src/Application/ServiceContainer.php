@@ -2,6 +2,8 @@
 
 namespace Application;
 
+use Application\Database\Connection;
+use Application\Database\MapperContainer;
 use Captcha\Captcha;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
@@ -14,6 +16,11 @@ use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 
 class ServiceContainer
 {
+    /**
+     * @var ServiceContainer
+     */
+    private static $instance;
+
     /**
      * @var array
      */
@@ -30,6 +37,34 @@ class ServiceContainer
     public function __construct(array $configs = array())
     {
         $this->configs = $configs;
+    }
+
+    /**
+     * @return ServiceContainer
+     */
+    public static function getInstance()
+    {
+        if (static::$instance == null) {
+            static::$instance = new ServiceContainer();
+        }
+
+        return static::$instance;
+    }
+
+    /**
+     * @param array $configs
+     */
+    public function setConfigs($configs)
+    {
+        $this->configs = $configs;
+    }
+
+    /**
+     * @return array
+     */
+    public function getConfigs()
+    {
+        return $this->configs;
     }
 
     /**
@@ -102,6 +137,30 @@ class ServiceContainer
             $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
             $this->services[__METHOD__] = $pdo;
+        }
+
+        return $this->services[__METHOD__];
+    }
+
+    /**
+     * @return Connection
+     */
+    public function getConnection()
+    {
+        if (!isset($this->services[__METHOD__])) {
+            $this->services[__METHOD__] = new Connection($this);
+        }
+
+        return $this->services[__METHOD__];
+    }
+
+    /**
+     * @return MapperContainer
+     */
+    public function getMapperContainer()
+    {
+        if (!isset($this->services[__METHOD__])) {
+            $this->services[__METHOD__] = new MapperContainer($this);
         }
 
         return $this->services[__METHOD__];

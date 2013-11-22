@@ -5,3 +5,4 @@ vendor
 log/*.log
 tmp/twig
 composer.lock
+app/configs/development.php

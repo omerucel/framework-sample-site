@@ -26,7 +26,7 @@ $configs['404Controller'] = 'Application\Site\NotFound';
 /**
  * Database
  */
-$configs['pdo']['dsn'] = 'mysql:host=127.0.0.1;dbname=sample;charset=utf8';
+$configs['pdo']['dsn'] = 'mysql:host=127.0.0.1;dbname=framework_sample_site;charset=utf8';
 $configs['pdo']['username'] = 'root';
 $configs['pdo']['password'] = '';
 
@@ -38,7 +38,7 @@ $configs['session']['db_table'] = 'session';
 $configs['session']['db_id_col'] = 'session_id';
 $configs['session']['db_data_col'] = 'session_value';
 $configs['session']['db_time_col'] = 'session_time';
-//$configs['session']['cookie_lifetime'] = 3600;
+$configs['session']['cookie_lifetime'] = 60 * 60 * 24 * 7;
 
 /**
  * Monolog
@@ -59,7 +59,8 @@ $configs['session']['db_time_col'] = 'session_time';
 $configs['monolog']['name'] = 'logger';
 $configs['monolog']['file'] = APP_PATH . '/log/project.log';
 $configs['monolog']['level'] = 100;
-$configs['monolog']['line_format'] = "[%datetime%] [" . uniqid('REQ-') . "] %channel%.%level_name%: %message%\n";
+$configs['monolog']['line_format'] = "[%datetime%] [" .
+    uniqid('REQ-') . "] %channel%.%level_name%: %message% %context%" . PHP_EOL;
 $configs['monolog']['datetime_format'] = 'Y-m-d H:i:s';
 
 /**

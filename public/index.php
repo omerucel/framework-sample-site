@@ -9,7 +9,7 @@ if (!isset($_SERVER['APP_ENV'])) {
 $loader = include_once '../vendor/autoload.php';
 
 // Configs
-$config = include_once '../app/configs/' . $_SERVER['APP_ENV'] . '.php';
+$configs = include_once '../app/configs/' . $_SERVER['APP_ENV'] . '.php';
 
 // Routes
 $routes = include_once '../app/configs/routes.php';

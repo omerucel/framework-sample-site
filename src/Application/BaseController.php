@@ -29,6 +29,22 @@ abstract class BaseController
     }
 
     /**
+     * @return null|Response
+     */
+    public function preDispatch()
+    {
+        return null;
+    }
+
+    /**
+     * @return null|Response
+     */
+    public function postDispatch()
+    {
+        return null;
+    }
+
+    /**
      * @param $templateFile
      * @param array $templateVariables
      * @param int $status
