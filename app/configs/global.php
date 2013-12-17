@@ -3,10 +3,14 @@
 define('APP_PATH', realpath(__DIR__ . '/../'));
 define('BASE_PATH', realpath(__DIR__ . '/../../'));
 
+date_default_timezone_set('Europe/Istanbul');
+
 /**
  * Init
  */
 $configs = array(
+    'app_path' => APP_PATH,
+    'base_path' => BASE_PATH,
     'pdo' => array(),
     'session' => array(),
     'twig' => array(),
@@ -16,17 +20,18 @@ $configs = array(
     'facebook' => array()
 );
 
-date_default_timezone_set('Europe/Istanbul');
-
 /**
  * General
  */
 $configs['404Controller'] = 'Application\Site\NotFound';
+$configs['site_url'] = '/';
+$configs['asset_url'] = '/';
+$configs['media_url'] = '/';
 
 /**
  * Database
  */
-$configs['pdo']['dsn'] = 'mysql:host=127.0.0.1;dbname=framework_sample_site;charset=utf8';
+$configs['pdo']['dsn'] = 'mysql:host=127.0.0.1;dbname=framework_template;charset=utf8';
 $configs['pdo']['username'] = 'root';
 $configs['pdo']['password'] = '';
 

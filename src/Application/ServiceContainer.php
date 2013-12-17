@@ -2,9 +2,12 @@
 
 namespace Application;
 
-use Application\Database\Connection;
-use Application\Database\MapperContainer;
+use Application\Mapper\MapperContainer;
 use Captcha\Captcha;
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Doctrine\DBAL\Configuration;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DriverManager;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -36,6 +39,10 @@ class ServiceContainer
      */
     public function __construct(array $configs = array())
     {
+        AnnotationRegistry::registerAutoloadNamespaces(array(
+            'Symfony\Component\Validator\Constraints' => $configs['base_path'] . '/vendor/symfony/validator'
+        ));
+
         $this->configs = $configs;
     }
 
@@ -97,8 +104,57 @@ class ServiceContainer
     public function getTwig()
     {
         if (!isset($this->services[__METHOD__])) {
+            $configs = $this->getConfigs();
             $loader = new \Twig_Loader_Filesystem($this->configs['twig']['template_path']);
-            $this->services[__METHOD__] = new \Twig_Environment($loader, $this->configs['twig']['options']);
+            $twig = new TwigEnvironment($loader, $this->configs['twig']['options']);
+
+            $asset = new \Twig_SimpleFunction(
+                'asset',
+                function () use ($configs) {
+                    $arguments = func_get_args();
+                    $path = array_shift($arguments);
+                    $path = vsprintf($path, $arguments);
+                    if ($path[0] == '/') {
+                        $path = substr($path, 1);
+                    }
+
+                    return $configs['asset_url'] . $path;
+                }
+            );
+
+            $siteUrl = new \Twig_SimpleFunction(
+                'site_url',
+                function () use ($configs) {
+                    $arguments = func_get_args();
+                    $path = array_shift($arguments);
+                    $path = vsprintf($path, $arguments);
+                    if ($path[0] == '/') {
+                        $path = substr($path, 1);
+                    }
+
+                    return $configs['site_url'] . $path;
+                }
+            );
+
+            $mediaUrl = new \Twig_SimpleFunction(
+                'media_url',
+                function () use ($configs) {
+                    $arguments = func_get_args();
+                    $path = array_shift($arguments);
+                    $path = vsprintf($path, $arguments);
+                    if ($path[0] == '/') {
+                        $path = substr($path, 1);
+                    }
+
+                    return $configs['media_url'] . $path;
+                }
+            );
+
+            $twig->addFunction('asset', $asset);
+            $twig->addFunction('site_url', $siteUrl);
+            $twig->addFunction('media_url', $mediaUrl);
+
+            $this->services[__METHOD__] = $twig;
         }
 
         return $this->services[__METHOD__];
@@ -148,7 +204,9 @@ class ServiceContainer
     public function getConnection()
     {
         if (!isset($this->services[__METHOD__])) {
-            $this->services[__METHOD__] = new Connection($this);
+            $config = new Configuration();
+            $conn = DriverManager::getConnection(array('pdo' => $this->getPDO()), $config);
+            $this->services[__METHOD__] = $conn;
         }
 
         return $this->services[__METHOD__];

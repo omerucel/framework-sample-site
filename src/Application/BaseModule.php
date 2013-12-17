@@ -2,6 +2,7 @@
 
 namespace Application;
 
+use OU\Application;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class BaseModule extends \OU\ModuleAbstract
@@ -16,6 +17,16 @@ abstract class BaseModule extends \OU\ModuleAbstract
      * @var ServiceContainer
      */
     protected $serviceContainer;
+
+    /**
+     * @param Application $application
+     */
+    public function __construct(Application $application)
+    {
+        parent::__construct($application);
+
+        $this->setErrorHandler();
+    }
 
     /**
      * @return ServiceContainer
@@ -37,8 +48,6 @@ abstract class BaseModule extends \OU\ModuleAbstract
      */
     public function dispatch($controllerClass, $requestMethod = 'get', array $params = array())
     {
-        $this->setErrorHandler();
-
         /**
          * @var BaseController $controller
          */
@@ -70,6 +79,7 @@ abstract class BaseModule extends \OU\ModuleAbstract
     {
         set_error_handler(array($this, 'errorHandler'));
         set_exception_handler(array($this, 'exceptionHandler'));
+        register_shutdown_function(array($this, 'fatalErrorHandler'));
     }
 
     /**
@@ -99,5 +109,23 @@ abstract class BaseModule extends \OU\ModuleAbstract
 
         $this->getServiceContainer()->getMonolog()->error($message);
         $this->internalServerError();
+    }
+
+    public function fatalErrorHandler()
+    {
+        $error = error_get_last();
+
+        if( $error !== NULL) {
+            $errNo = $error["type"];
+            $errFile = $error["file"];
+            $errLine = $error["line"];
+            $errStr = $error["message"];
+
+            $message = $errNo . ' ' . $errStr . ' ' . $errFile . ':' . $errLine;
+            $message = str_replace("\n", '', $message);
+
+            $this->getServiceContainer()->getMonolog()->error($message);
+            $this->internalServerError();
+        }
     }
 }

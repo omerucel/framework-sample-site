@@ -2,10 +2,12 @@
 
 namespace Application\Site;
 
-class InternalError extends BaseSiteController
+use Application\BaseController;
+
+class InternalError extends BaseController
 {
     public function get()
     {
-        return $this->toPlainText('Site:Internal server error', 500);
+        return $this->render('site/500.twig', array(), 500);
     }
 }

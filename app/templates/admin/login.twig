@@ -2,6 +2,16 @@
 
 {% block title %}Oturum Aç{% endblock %}
 
+{% block javascripts %}
+    <script type="text/javascript">
+        var RecaptchaOptions = {
+            theme : 'custom',
+            custom_theme_widget: 'recaptcha_widget'
+        };
+    </script>
+    <script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k={{ recaptcha_public_key }}"></script>
+{% endblock %}
+
 {% block main_content %}
     <div class="container">
         <div class="row">
@@ -10,22 +20,42 @@
                     <h3>Oturum Aç</h3>
                 </div>
 
-                {% if error %}
-                    <div class="alert alert-danger">
-                        <p>{{ error }}</p>
-                    </div>
-                {% endif %}
+                {% include "admin/embed_message.twig" %}
 
                 <form method="POST" action="">
-                    <div class="form-group">
+                    <div class="form-group {% if form_violations.username %}has-error{% endif %}">
+                        <label>Kullanıcı Adı</label>
                         <input type="text" name="username" placeholder="Kullanıcı Adı" class="form-control" />
+                        {% if form_violations.username %}
+                            <span class="help-block">{{ form_violations.username }}</span>
+                        {% endif %}
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {% if form_violations.password %}has-error{% endif %}">
+                        <label>Şifre</label>
                         <input type="password" name="password" placeholder="Şifre" class="form-control" />
+                        {% if form_violations.password %}
+                            <span class="help-block">{{ form_violations.password }}</span>
+                        {% endif %}
                     </div>
-                    <div class="form-group">
-                        <label>Güvenlik Kodu</label>
-                        {{ captcha_html|raw }}
+                    <div id="recaptcha_widget">
+
+                        <div class="form-group {% if form_violations.validSecurityCode %}has-error{% endif %}">
+                            <label class="recaptcha_only_if_image">Güvenlik Kodu</label>
+                            <label class="recaptcha_only_if_audio">Güvenlik Kodu</label>
+
+                            <div id="recaptcha_image" style="margin: 10px 0;"></div>
+
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="recaptcha_response_field" name="recaptcha_response_field" />
+                                <a href="javascript:Recaptcha.reload();" class="btn input-group-addon"><span class="fa fa-refresh"></span></a>
+                                <a href="javascript:Recaptcha.switch_type('audio');" class="btn input-group-addon recaptcha_only_if_image"><span class="fa fa-headphones"></span></a>
+                                <a href="javascript:Recaptcha.switch_type('image');" class="btn input-group-addon recaptcha_only_if_audio"><span class="fa fa-picture-o"></span></a>
+                                <a href="javascript:Recaptcha.showhelp()" class="btn input-group-addon"><span class="fa fa-question"></span></a>
+                            </div>
+                            {% if form_violations.validSecurityCode %}
+                                <span class="help-block">{{ form_violations.validSecurityCode }}</span>
+                            {% endif %}
+                        </div>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-success">Oturum Aç</button>

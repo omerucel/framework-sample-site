@@ -5,8 +5,9 @@ $configs = include 'global.php';
 date_default_timezone_set('Europe/Istanbul');
 
 /**
- * Database
+ * recaptcha
  */
-$configs['pdo']['dsn'] = 'sqlite::memory:';
+$configs['recaptcha']['public_key'] = '';
+$configs['recaptcha']['private_key'] = '';
 
 return $configs;

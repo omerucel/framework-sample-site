@@ -2,7 +2,7 @@
 
 namespace Application\Model;
 
-class FacebookAccount
+class FacebookAccount extends BaseModel
 {
     /**
      * @var int

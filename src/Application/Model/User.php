@@ -35,8 +35,10 @@ class User extends BaseModel
     public function getFacebookAccount()
     {
         if ($this->facebookAccount == null) {
-            $this->facebookAccount = $this->getServiceContainer()->getMapperContainer()
-                ->getUserMapper()->fetchFacebookAccount($this->id);
+            $this->facebookAccount = $this->getServiceContainer()
+                ->getMapperContainer()
+                ->getUserMapper()
+                ->fetchFacebookAccount($this->id);
         }
 
         return $this->facebookAccount;
@@ -48,15 +50,23 @@ class User extends BaseModel
     public function isAdminUser()
     {
         if ($this->isAdminUser === null) {
-            $this->isAdminUser = $this->getServiceContainer()->getMapperContainer()
-                ->getUserMapper()->isAdminUser($this->id);
+            $this->isAdminUser = $this->getServiceContainer()
+                ->getMapperContainer()
+                ->getUserMapper()
+                ->isAdminUser($this->id);
         }
 
         return $this->isAdminUser;
     }
 
+    /**
+     * @return void
+     */
     public function insertNewLoginHistory()
     {
-        $this->getServiceContainer()->getMapperContainer()->getUserMapper()->newLoginHistory($this->id);
+        $this->getServiceContainer()
+            ->getMapperContainer()
+            ->getUserMapper()
+            ->newLoginHistory($this->id);
     }
 }

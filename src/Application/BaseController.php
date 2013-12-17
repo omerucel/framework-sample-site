@@ -98,6 +98,25 @@ abstract class BaseController
     }
 
     /**
+     * @param $csvFileName
+     * @param $templateFile
+     * @param array $templateVariables
+     * @param int $status
+     * @return Response
+     */
+    public function renderForCsv($csvFileName, $templateFile, $templateVariables = array(), $status = 200)
+    {
+        $response = $this->render($templateFile, $templateVariables, $status);
+        $response->headers->set('Content-Description', 'CSV File');
+        $response->headers->set('Content-Disposition', 'attachment; filename=' . $csvFileName);
+        $response->headers->set('Content-Transfer-Encoding', 'binary');
+        $response->headers->set('Pragma', 'no-cache');
+        $response->headers->set('Expires', '0');
+
+        return $response;
+    }
+
+    /**
      * @param $content
      * @param $status
      * @param string $contentType

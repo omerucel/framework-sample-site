@@ -2,7 +2,6 @@
 
 namespace Application;
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class Site extends BaseModule
@@ -12,7 +11,13 @@ class Site extends BaseModule
      */
     public function internalServerError()
     {
-        $response = new RedirectResponse('/500');
-        $response->send();
+        $this->dispatch('Application\Site\InternalError');
+        exit;
+    }
+
+    public function pageNotFound()
+    {
+        $this->dispatch('Application\Site\NotFound');
+        exit;
     }
 }

@@ -1,5 +1,5 @@
 {
-    "name": "omerucel/framework-sample-site",
+    "name": "omerucel/framework-template",
     "require": {
         "omerucel/framework": "dev-master",
         "symfony/http-foundation": "2.3.4",
@@ -8,7 +8,11 @@
         "sybio/image-workshop": "2.0.5",
         "facebook/php-sdk" : "*",
         "recaptcha/php5": "dev-master",
-        "swiftmailer/swiftmailer": "5.0.2"
+        "swiftmailer/swiftmailer": "5.0.2",
+        "symfony/validator": "v2.4.0",
+        "doctrine/annotations": "v1.1.2",
+        "doctrine/cache": "v1.3.0",
+        "doctrine/dbal": "2.4.1"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*"

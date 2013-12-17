@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Database;
+namespace Application\Mapper;
 
 use Application\ServiceContainer;
 
@@ -39,6 +39,18 @@ class MapperContainer
     {
         if (!isset($this->mappers[__METHOD__])) {
             $this->mappers[__METHOD__] = new UserMapper($this->getServiceContainer());
+        }
+
+        return $this->mappers[__METHOD__];
+    }
+
+    /**
+     * @return UtilityMapper
+     */
+    public function getUtilityMapper()
+    {
+        if (!isset($this->mappers[__METHOD__])) {
+            $this->mappers[__METHOD__] = new UtilityMapper($this->getServiceContainer());
         }
 
         return $this->mappers[__METHOD__];
