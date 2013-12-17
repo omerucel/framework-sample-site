@@ -1,5 +1,5 @@
 {
-    "name": "omerucel/framework-template",
+    "name": "omerucel/framework-sample-site",
     "require": {
         "omerucel/framework": "dev-master",
         "symfony/http-foundation": "2.3.4",
