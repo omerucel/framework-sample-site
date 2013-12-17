@@ -1,0 +1,23 @@
+{% set default_meta_url = "" %}
+{% set default_meta_image = "" %}
+
+<title>{{ meta_title|default(default_meta_title.value) }}</title>
+<meta name="description" content="{{ meta_description|default(default_meta_description.value) }}">
+<meta property="keywords" content="{{ meta_keywords|default(default_meta_keywords.value) }}"/>
+
+<!-- Facebook -->
+<meta property="og:site_name" content="{{ site_name.value }}"/>
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{ meta_title|default(default_meta_title.value) }}"/>
+<meta property="og:description" content="{{ meta_description|default(default_meta_description.value) }}"/>
+<meta property="og:url" content="{{ meta_url|default(default_meta_url) }}"/>
+<meta property="og:image" content="{{ meta_image|default(default_meta_image) }}" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{{ meta_title|default(default_meta_title.value) }}">
+<meta name="twitter:description" content="{{ meta_description|default(default_meta_description.value) }}" />
+<meta name="twitter:url" content="{{ meta_url|default(default_meta_url) }}">
+<meta name="twitter:image:src" content="{{ meta_image|default(default_meta_image) }}" />
+
+<link rel="alternate" type="application/rss+xml" title="{{ default_meta_title.value }}" href="{{ site_url('/rss') }}" />

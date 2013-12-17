@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-xs-4">
+        <p style="margin-top: 3px;"><span class="label label-primary">Toplamda {{ paginator.getTotalItemCount() }} kayıt var.</span></p>
+    </div>
+    <div class="col-xs-8">
+        {% if paginator.hasPage() %}
+            <ul class="pagination pagination-sm pull-right" style="margin:0;padding:0;">
+                <li {% if not paginator.hasPrevPage() %}class="disabled"{% endif %}><a href="?{{ paginator.createQueryString({'page': paginator.getPrevPage()}) }}">&laquo; Geri</a></li>
+                {% for i in paginator.getPages() %}
+                    <li {% if paginator.getPage() == i %}class="active"{% endif %}><a href="?{{ paginator.createQueryString({'page': i}) }}">{{ i }}</a></li>
+                {% endfor %}
+                <li {% if not paginator.hasNextPage() %}class="disabled"{% endif %}><a href="?{{ paginator.createQueryString({'page': paginator.getNextPage()}) }}">İleri &raquo;</a></li>
+            </ul>
+        {% endif %}
+    </div>
+</div>

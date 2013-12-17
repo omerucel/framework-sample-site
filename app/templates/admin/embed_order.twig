@@ -1,0 +1,9 @@
+<div class="btn-group">
+    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+        {% if paginator.getOrderColumn() == 'name' %}Kategori{% endif %} Adına Göre Sırala [{% if paginator.getOrderType() == 'asc' %}A-Z{% else %}Z-A{% endif %}] <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li><a href="?{{ paginator.createQueryString({'order_type': 'asc', 'order_column': 'name'}) }}">Kategori Adına Göre Sırala [A-Z]</a></li>
+        <li><a href="?{{ paginator.createQueryString({'order_type': 'desc', 'order_column': 'name'}) }}">Kategori Adına Göre Sırala [Z-A]</a></li>
+    </ul>
+</div>

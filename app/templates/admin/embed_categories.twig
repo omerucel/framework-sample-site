@@ -1,0 +1,11 @@
+<div class="btn-group">
+    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+        {% if paginator.getCategoryId() == 0 %}Tüm Kategoriler{% else %}{{ category.name }}{% endif %} <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li><a href="?{{ paginator.createQueryString({'page': 1, 'category_id': 0}) }}">Tüm Kategoriler</a></li>
+        {% for category in categories %}
+            <li><a href="?{{ paginator.createQueryString({'category_id': category.id, 'page': 1}) }}">{{ category.name }}</a></li>
+        {% endfor %}
+    </ul>
+</div>

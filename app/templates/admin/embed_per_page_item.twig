@@ -1,0 +1,11 @@
+<div class="btn-group">
+    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+        {{ paginator.getPerPageItem() }} Kayıt Göster <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li><a href="?{{ paginator.createQueryString({'per_page_item': 10, 'page': 1}) }}">10 Kayıt Göster</a></li>
+        <li><a href="?{{ paginator.createQueryString({'per_page_item': 20, 'page': 1}) }}">20 Kayıt Göster</a></li>
+        <li><a href="?{{ paginator.createQueryString({'per_page_item': 50, 'page': 1}) }}">50 Kayıt Göster</a></li>
+        <li><a href="?{{ paginator.createQueryString({'per_page_item': 100, 'page': 1}) }}">100 Kayıt Göster</a></li>
+    </ul>
+</div>

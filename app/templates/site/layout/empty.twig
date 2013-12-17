@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+
+    {% include "site/embed_meta.twig" %}
+
+    {% block stylesheets %}{% endblock %}
+
+    {{ google_analytics.value|raw }}
+</head>
+<body>
+    {% block main_content %}{% endblock %}
+    {% block javascripts %}{% endblock %}
+</body>
+</html>

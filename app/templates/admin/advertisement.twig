@@ -1,0 +1,42 @@
+{% extends "admin/layout/default.twig" %}
+
+{% block title %}Reklam Alanları{% endblock %}
+
+{% block main_content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-header">
+                    <h3>Reklam Alanları</h3>
+                </div>
+                <form method="POST" action="">
+                    {% include 'admin/embed_message.twig' %}
+
+                    <div class="form-group">
+                        <label>Anasayfa 728x90</label>
+                        <textarea rows="5" name="homepage_728_90" class="form-control">{{ homepage_728_90.value }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Anasayfa 300x250</label>
+                        <textarea rows="5" name="homepage_300_250" class="form-control">{{ homepage_300_250.value }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Haber Detay 300x250</label>
+                        <textarea rows="5" name="news_detail_300_250" class="form-control">{{ news_detail_300_250.value }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>iframe 728x90</label>
+                        <textarea rows="5" name="iframe_728_90" class="form-control">{{ iframe_728_90.value }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" tabindex="0">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
