@@ -40,7 +40,8 @@ class ServiceContainer
     public function __construct(array $configs = array())
     {
         AnnotationRegistry::registerAutoloadNamespaces(array(
-            'Symfony\Component\Validator\Constraints' => $configs['base_path'] . '/vendor/symfony/validator'
+            'Symfony\Component\Validator\Constraints' => $configs['base_path'] . '/vendor/symfony/validator',
+            'Application' => $configs['base_path'] . '/src/'
         ));
 
         $this->configs = $configs;
@@ -294,6 +295,18 @@ class ServiceContainer
             $captcha->setPrivateKey($this->configs['recaptcha']['private_key']);
 
             $this->services[__METHOD__] = $captcha;
+        }
+
+        return $this->services[__METHOD__];
+    }
+
+    /**
+     * @return \Doctrine\Common\Annotations\AnnotationReader
+     */
+    public function getAnnotationReader()
+    {
+        if (!isset($this->services[__METHOD__])) {
+            $this->services[__METHOD__] = new \Doctrine\Common\Annotations\AnnotationReader();
         }
 
         return $this->services[__METHOD__];
