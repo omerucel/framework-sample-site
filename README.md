@@ -12,6 +12,13 @@ $ vagrant up
 
 vagrant up komutu çalıştırılmadan önce Vagrantfile dosyası kontrol edilmeli ve gerekiyorsa sabit ip adresi değiştirilmeli.
 
+Projenin geliştirici ortamında çalışabilmesi için aşağıdaki komutlar çalıştırılmalıdır:
+
+```bash
+$ composer update
+$ cp app/configs/development.php.sample app/configs/development.php
+```
+
 Proje yayına girerken aşağıdaki dizinlere yazma izni vermeyi unutmayın. Vagrant ile çalışırken bu izinler otomatik olarak verilir.
 
 * app/tmp

@@ -31,7 +31,7 @@ $configs['media_url'] = '/';
 /**
  * Database
  */
-$configs['pdo']['dsn'] = 'mysql:host=127.0.0.1;dbname=framework_template;charset=utf8';
+$configs['pdo']['dsn'] = 'mysql:host=127.0.0.1;dbname=framework;charset=utf8';
 $configs['pdo']['username'] = 'root';
 $configs['pdo']['password'] = '';
 
