@@ -72,27 +72,6 @@ CREATE TABLE IF NOT EXISTS `framework`.`session` (
   PRIMARY KEY (`session_id`))
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `framework`.`facebook_account`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `framework`.`facebook_account` ;
-
-CREATE TABLE IF NOT EXISTS `framework`.`facebook_account` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` INT UNSIGNED NOT NULL,
-  `facebook_id` BIGINT UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_user_id_facebook_account_user_id_idx` (`user_id` ASC),
-  UNIQUE INDEX `index3` (`user_id` ASC, `facebook_id` ASC),
-  CONSTRAINT `fk_user_id_facebook_account_user_id`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `framework`.`user` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `framework`.`setting`
 -- -----------------------------------------------------

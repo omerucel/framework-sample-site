@@ -45,12 +45,12 @@ class MapperContainer
     }
 
     /**
-     * @return UtilityMapper
+     * @return SettingMapper
      */
-    public function getUtilityMapper()
+    public function getSettingMapper()
     {
         if (!isset($this->mappers[__METHOD__])) {
-            $this->mappers[__METHOD__] = new UtilityMapper($this->getServiceContainer());
+            $this->mappers[__METHOD__] = new SettingMapper($this->getServiceContainer());
         }
 
         return $this->mappers[__METHOD__];

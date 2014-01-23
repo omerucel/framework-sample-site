@@ -2,7 +2,6 @@
 
 namespace Application\Mapper;
 
-use Application\Model\FacebookAccount;
 use Application\Model\User;
 
 class UserMapper extends BaseMapper
@@ -14,15 +13,6 @@ class UserMapper extends BaseMapper
     public function loadUserObject($data)
     {
         return parent::loadObject($data, 'Application\Model\User');
-    }
-
-    /**
-     * @param $data
-     * @return FacebookAccount|null
-     */
-    public function loadFacebookAccountObject($data)
-    {
-        return parent::loadObject($data, 'Application\Model\FacebookAccount');
     }
 
     /**
@@ -46,39 +36,18 @@ class UserMapper extends BaseMapper
      */
     public function fetchByUsernameAndPassword($username, $password)
     {
-        $query = $this->createQueryBuilder()
+        $data = $this->createQueryBuilder()
             ->select('*')
             ->from('user', 'u')
             ->where('u.username = :username')
             ->andWhere('u.password = :password')
-            ->andWhere('u.status = 1');
+            ->andWhere('u.status = 1')
+            ->setParameter(':username', $username)
+            ->setParameter(':password', sha1($password))
+            ->execute()
+            ->fetch();
 
-        $params = array(
-            'username' => $username,
-            'password' => sha1($password)
-        );
-
-        $data = $this->getConnection()->executeQuery($query, $params)->fetch();
         return $this->loadUserObject($data);
-    }
-
-    /**
-     * @param $userId
-     * @return mixed
-     */
-    public function fetchFacebookAccount($userId)
-    {
-        $query = $this->createQueryBuilder()
-            ->select('*')
-            ->from('facebook_account', 'fa')
-            ->where('fa.user_id = :user_id');
-
-        $params = array(
-            'user_id' => $userId
-        );
-
-        $data = $this->getConnection()->executeQuery($query, $params);
-        return $this->loadFacebookAccountObject($data);
     }
 
     /**
@@ -87,17 +56,14 @@ class UserMapper extends BaseMapper
      */
     public function isAdminUser($userId)
     {
-        $query = $this->createQueryBuilder()
+        return $this->createQueryBuilder()
             ->select('COUNT(*) AS count')
             ->from('admin_user', 'au')
             ->where('au.user_id = :user_id')
-            ->andWhere('au.status = 1');
-
-        $params = array(
-            ':user_id' => $userId
-        );
-
-        return $this->getConnection()->executeQuery($query, $params)->fetchColumn();
+            ->andWhere('au.status = 1')
+            ->setParameter(':user_id', $userId)
+            ->execute()
+            ->fetchColumn() == 1;
     }
 
     /**

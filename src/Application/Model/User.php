@@ -25,26 +25,6 @@ class User extends BaseModel
     protected $isAdminUser;
 
     /**
-     * @var FacebookAccount
-     */
-    protected $facebookAccount;
-
-    /**
-     * @return \Application\Model\FacebookAccount
-     */
-    public function getFacebookAccount()
-    {
-        if ($this->facebookAccount == null) {
-            $this->facebookAccount = $this->getServiceContainer()
-                ->getMapperContainer()
-                ->getUserMapper()
-                ->fetchFacebookAccount($this->id);
-        }
-
-        return $this->facebookAccount;
-    }
-
-    /**
      * @return bool
      */
     public function isAdminUser()

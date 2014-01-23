@@ -17,13 +17,10 @@ class Advertisement extends BaseAdminController
      */
     public function post()
     {
-        $utilityMapper = $this->getServiceContainer()->getMapperContainer()->getUtilityMapper();
+        $settingMapper = $this->getServiceContainer()->getMapperContainer()->getSettingMapper();
         $request = $this->getServiceContainer()->getRequest();
 
-        $utilityMapper->updateSetting('homepage_728_90', $request->get('homepage_728_90'));
-        $utilityMapper->updateSetting('homepage_300_250', $request->get('homepage_300_250'));
-        $utilityMapper->updateSetting('news_detail_300_250', $request->get('news_detail_300_250'));
-        $utilityMapper->updateSetting('iframe_728_90', $request->get('iframe_728_90'));
+        $settingMapper->update('homepage_728_90', $request->get('homepage_728_90'));
 
         $templateParams = array(
             'message' => 'Değişiklikler kaydedildi.',
@@ -39,12 +36,13 @@ class Advertisement extends BaseAdminController
      */
     public function renderPage(array $templateParams = array())
     {
-        $utilityMapper = $this->getServiceContainer()->getMapperContainer()->getUtilityMapper();
+        $settingMapper = $this->getServiceContainer()->getMapperContainer()->getSettingMapper();
 
-        $templateParams['homepage_728_90'] = $utilityMapper->fetchOneSettingByName('homepage_728_90');
-        $templateParams['homepage_300_250'] = $utilityMapper->fetchOneSettingByName('homepage_300_250');
-        $templateParams['news_detail_300_250'] = $utilityMapper->fetchOneSettingByName('news_detail_300_250');
-        $templateParams['iframe_728_90'] = $utilityMapper->fetchOneSettingByName('iframe_728_90');
+        $settings = $settingMapper->fetchAllByNames(array(
+            'homepage_728_90'
+        ));
+
+        $templateParams['settings'] = $settings;
 
         return $this->render('admin/advertisement.twig', $templateParams);
     }

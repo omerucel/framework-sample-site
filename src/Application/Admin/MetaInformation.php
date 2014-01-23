@@ -17,14 +17,14 @@ class MetaInformation extends BaseAdminController
      */
     public function post()
     {
-        $utilityMapper = $this->getServiceContainer()->getMapperContainer()->getUtilityMapper();
+        $settingMapper = $this->getServiceContainer()->getMapperContainer()->getSettingMapper();
         $request = $this->getServiceContainer()->getRequest();
 
-        $utilityMapper->updateSetting('site_name', $request->get('site_name'));
-        $utilityMapper->updateSetting('google_analytics', $request->get('google_analytics'));
-        $utilityMapper->updateSetting('meta_title', $request->get('meta_title'));
-        $utilityMapper->updateSetting('meta_description', $request->get('meta_description'));
-        $utilityMapper->updateSetting('meta_keywords', $request->get('meta_keywords'));
+        $settingMapper->update('site_name', $request->get('site_name'));
+        $settingMapper->update('google_analytics', $request->get('google_analytics'));
+        $settingMapper->update('meta_title', $request->get('meta_title'));
+        $settingMapper->update('meta_description', $request->get('meta_description'));
+        $settingMapper->update('meta_keywords', $request->get('meta_keywords'));
 
         $templateParams = array(
             'message' => 'Değişiklikler kaydedildi.',
@@ -40,13 +40,13 @@ class MetaInformation extends BaseAdminController
      */
     public function renderPage(array $templateParams = array())
     {
-        $utilityMapper = $this->getServiceContainer()->getMapperContainer()->getUtilityMapper();
+        $settingMapper = $this->getServiceContainer()->getMapperContainer()->getSettingMapper();
 
-        $templateParams['site_name'] = $utilityMapper->fetchOneSettingByName('site_name');
-        $templateParams['google_analytics'] = $utilityMapper->fetchOneSettingByName('google_analytics');
-        $templateParams['meta_title'] = $utilityMapper->fetchOneSettingByName('meta_title');
-        $templateParams['meta_description'] = $utilityMapper->fetchOneSettingByName('meta_description');
-        $templateParams['meta_keywords'] = $utilityMapper->fetchOneSettingByName('meta_keywords');
+        $settings = $settingMapper->fetchAllByNames(array(
+            'google_analytics', 'site_name', 'meta_title', 'meta_description', 'meta_keywords'
+        ));
+
+        $templateParams['settings'] = $settings;
 
         return $this->render('admin/meta_information.twig', $templateParams);
     }
